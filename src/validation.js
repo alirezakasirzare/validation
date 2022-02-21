@@ -1,12 +1,23 @@
 class validation {
   // varibles
   formElement;
+  defaultOptions = {
+    lazy: true,
+    required: true,
+  };
+  in;
   // constructor
-  constructor(formId) {
-    this.formElement = this._$_(formId);
+  constructor(form) {
+    this.formElement = this._$_(form);
   }
-  // get element method by id
-  _$_(id) {
-    return document.getElementById(id);
+  // email validate
+  // email(inputId, option) {}
+  // select element method
+  _$_(selector) {
+    if (typeof selector === "string") {
+      return document.querySelector(selector);
+    } else {
+      return selector;
+    }
   }
 }
