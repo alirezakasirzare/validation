@@ -4,6 +4,8 @@ class validation {
   defaultOptions = {
     lazy: false,
     required: true,
+    validStyle: null,
+    invalidStyle: null,
   };
   emailValidation = [];
   validitionTrueEvent = new CustomEvent("validitiontrue");
@@ -18,6 +20,8 @@ class validation {
       element: this._$_(input),
       lazy: this._option_(option, "lazy"),
       required: this._option_(option, "required"),
+      validStyle: this._option_(option, "validStyle"),
+      invalidStyle: this._option_(option, "invalidStyle"),
       valid: false,
     };
 
@@ -77,9 +81,21 @@ class validation {
           validateEmail(element.value) ||
           (!element.value.length && !required)
         ) {
+          // add style
+          if (item.validStyle) {
+            element.classList.remove(item.invalidStyle);
+            element.classList.add(item.validStyle);
+          }
+          // send event
           item.valid = true;
           element.dispatchEvent(this.validitionTrueEvent);
         } else {
+          // add style
+          if (item.validStyle) {
+            element.classList.remove(item.validStyle);
+            element.classList.add(item.invalidStyle);
+          }
+          // send event
           item.valid = false;
           element.dispatchEvent(this.validitionFalseEvent);
         }
