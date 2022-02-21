@@ -63,7 +63,10 @@ class validation {
       const required = item.required;
       // edd event to input
       element.addEventListener(lazy ? "keyup" : "focusout", () => {
-        if (validateEmail(element.value)) {
+        if (
+          validateEmail(element.value) ||
+          (!element.value.length && !required)
+        ) {
           element.dispatchEvent(this.validitionTrueEvent);
         } else {
           element.dispatchEvent(this.validitionFalseEvent);
