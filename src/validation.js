@@ -27,21 +27,18 @@ class validation {
   init() {
     // add submit event to form
     this.formElement.addEventListener("submit", (e) => {
-      // remove default event
+      // remove default event and send falsy validation events
       let notValidYet = false;
       this.emailValidation.forEach((item) => {
-        // console.log(item.valid);
         if (item.valid == false) {
           notValidYet = true;
           item.element.dispatchEvent(this.validitionFalseEvent);
-          // console.log("slam");
+          this.formElement.dispatchEvent(this.validitionFalseEvent);
         }
       });
-      // console.log(notValidYet);
       if (notValidYet) {
         e.preventDefault();
       }
-      // console.log(this.emailValidation[0].valid);
     });
     // email validation init
     this.emailValidationInit();
