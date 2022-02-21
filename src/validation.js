@@ -20,6 +20,14 @@ class validation {
 
     this.emailValidation.push(item);
   }
+  // init the events
+  init() {
+    this.formElement.addEventListener("submit", (e) => {
+      e.preventDefault();
+    });
+    // this.emailValidation.forEach(item=>{
+    // })
+  }
   // select element method
   _$_(selector) {
     if (typeof selector === "string") {
