@@ -16,17 +16,20 @@ class validation {
       element: this._$_(input),
       lazy: this._option_(option, "lazy"),
       required: this._option_(option, "required"),
+      valid: false,
     };
 
     this.emailValidation.push(item);
   }
   // init the events
   init() {
+    // add submit event to form
     this.formElement.addEventListener("submit", (e) => {
+      // remove default event
       e.preventDefault();
     });
-    // this.emailValidation.forEach(item=>{
-    // })
+    // email validation init
+    this.emailValidationInit();
   }
   // select element method
   _$_(selector) {
@@ -40,5 +43,26 @@ class validation {
   _option_(option, item) {
     // console.log(item in option);
     return item in option ? option[item] : this.defaultOptions[item];
+  }
+  // init the email validation
+  emailValidationInit() {
+    // const validateEmail = (email) => {
+    //   return String(email)
+    //     .toLowerCase()
+    //     .match(
+    //       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    //     );
+    // };
+    this.emailValidation.forEach((item) => {
+      // varibles
+      const element = item.element;
+      const lazy = item.lazy;
+      const required = item.required;
+      // edd event to input
+      // element.addEventListener(lazy ? "keyup" : "focusout", () => {
+      // console.log(validateEmail(element.value));
+      // console.log(element.value);
+      // });
+    });
   }
 }
