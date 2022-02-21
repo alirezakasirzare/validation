@@ -2,7 +2,7 @@ class validation {
   // varibles
   formElement;
   defaultOptions = {
-    lazy: true,
+    lazy: false,
     required: true,
   };
   emailValidation = [];
@@ -72,7 +72,7 @@ class validation {
       const lazy = item.lazy;
       const required = item.required;
       // edd event to input
-      element.addEventListener(lazy ? "keyup" : "focusout", () => {
+      element.addEventListener(lazy ? "focusout" : "keyup", () => {
         if (
           validateEmail(element.value) ||
           (!element.value.length && !required)
