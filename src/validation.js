@@ -28,7 +28,18 @@ class validation {
     // add submit event to form
     this.formElement.addEventListener("submit", (e) => {
       // remove default event
-      e.preventDefault();
+      let notValidYet = false;
+      this.emailValidation.forEach((item) => {
+        // console.log(item.valid);
+        if (item.valid == false) {
+          notValidYet = true;
+        }
+      });
+      console.log(notValidYet);
+      if (notValidYet) {
+        e.preventDefault();
+      }
+      // console.log(this.emailValidation[0].valid);
     });
     // email validation init
     this.emailValidationInit();
@@ -67,8 +78,10 @@ class validation {
           validateEmail(element.value) ||
           (!element.value.length && !required)
         ) {
+          item.valid = true;
           element.dispatchEvent(this.validitionTrueEvent);
         } else {
+          item.valid = false;
           element.dispatchEvent(this.validitionFalseEvent);
         }
       });
