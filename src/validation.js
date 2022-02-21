@@ -33,11 +33,11 @@ class validation {
         if (item.valid == false) {
           notValidYet = true;
           item.element.dispatchEvent(this.validitionFalseEvent);
-          this.formElement.dispatchEvent(this.validitionFalseEvent);
         }
       });
       if (notValidYet) {
         e.preventDefault();
+        this.formElement.dispatchEvent(this.validitionFalseEvent);
       }
     });
     // email validation init
