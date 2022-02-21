@@ -6,6 +6,8 @@ class validation {
     required: true,
   };
   emailValidation = [];
+  validitionTrueEvent = new CustomEvent("validitiontrue");
+  validitionfalseEvent = new CustomEvent("validitionfalse");
   // constructor
   constructor(form) {
     this.formElement = this._$_(form);
@@ -46,23 +48,38 @@ class validation {
   }
   // init the email validation
   emailValidationInit() {
-    // const validateEmail = (email) => {
-    //   return String(email)
-    //     .toLowerCase()
-    //     .match(
-    //       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    //     );
-    // };
+    const validateEmail = (email) => {
+      return String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        )
+        ? true
+        : false;
+    };
     this.emailValidation.forEach((item) => {
       // varibles
       const element = item.element;
       const lazy = item.lazy;
       const required = item.required;
       // edd event to input
-      // element.addEventListener(lazy ? "keyup" : "focusout", () => {
-      // console.log(validateEmail(element.value));
-      // console.log(element.value);
-      // });
+      element.addEventListener(lazy ? "keyup" : "focusout", () => {
+        // console.log();
+        if (validateEmail(element.value)) {
+          element.dispatchEvent(this.validitionTrueEvent, {
+            bubbles: true,
+            cancelable: false,
+          });
+          // console.log(this.validitionTrueEvent);
+        } else {
+          element.dispatchEvent(this.validitionFalseEvent, {
+            bubbles: true,
+            cancelable: false,
+          });
+          // console.log("slam2");
+        }
+        // console.log(element.value);
+      });
     });
   }
 }
