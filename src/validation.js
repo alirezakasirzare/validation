@@ -33,9 +33,11 @@ class validation {
         // console.log(item.valid);
         if (item.valid == false) {
           notValidYet = true;
+          item.element.dispatchEvent(this.validitionFalseEvent);
+          // console.log("slam");
         }
       });
-      console.log(notValidYet);
+      // console.log(notValidYet);
       if (notValidYet) {
         e.preventDefault();
       }
