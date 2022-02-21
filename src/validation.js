@@ -7,7 +7,7 @@ class validation {
   };
   emailValidation = [];
   validitionTrueEvent = new CustomEvent("validitiontrue");
-  validitionfalseEvent = new CustomEvent("validitionfalse");
+  validitionFalseEvent = new CustomEvent("validitionfalse");
   // constructor
   constructor(form) {
     this.formElement = this._$_(form);
@@ -43,7 +43,6 @@ class validation {
   }
   // get custom option
   _option_(option, item) {
-    // console.log(item in option);
     return item in option ? option[item] : this.defaultOptions[item];
   }
   // init the email validation
@@ -64,21 +63,11 @@ class validation {
       const required = item.required;
       // edd event to input
       element.addEventListener(lazy ? "keyup" : "focusout", () => {
-        // console.log();
         if (validateEmail(element.value)) {
-          element.dispatchEvent(this.validitionTrueEvent, {
-            bubbles: true,
-            cancelable: false,
-          });
-          // console.log(this.validitionTrueEvent);
+          element.dispatchEvent(this.validitionTrueEvent);
         } else {
-          element.dispatchEvent(this.validitionFalseEvent, {
-            bubbles: true,
-            cancelable: false,
-          });
-          // console.log("slam2");
+          element.dispatchEvent(this.validitionFalseEvent);
         }
-        // console.log(element.value);
       });
     });
   }
