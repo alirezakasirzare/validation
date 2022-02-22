@@ -8,8 +8,7 @@ class validation {
     invalidStyle: null,
   };
   emailValidation = [];
-  validitionTrueEvent = new CustomEvent("validitiontrue");
-  validitionFalseEvent = new CustomEvent("validitionfalse");
+
   // constructor
   constructor(form) {
     this.formElement = this._$_(form);
@@ -66,9 +65,7 @@ class validation {
         .toLowerCase()
         .match(
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        )
-        ? true
-        : false;
+        );
     };
     this.emailValidation.forEach((item) => {
       // varibles
@@ -77,10 +74,8 @@ class validation {
       const required = item.required;
       // edd event to input
       element.addEventListener(lazy ? "focusout" : "input", () => {
-        if (
-          validateEmail(element.value) ||
-          (!element.value.length && !required)
-        ) {
+        const testValidEmail = validateEmail(element.value);
+        if (testValidEmail || (!element.value.length && !required)) {
           // add style
           if (item.validStyle) {
             element.classList.remove(item.invalidStyle);
@@ -88,7 +83,24 @@ class validation {
           }
           // send event
           item.valid = true;
-          element.dispatchEvent(this.validitionTrueEvent);
+          const customEventSendin = {
+            email: testValidEmail[0],
+            username: testValidEmail[1],
+            domainname: testValidEmail[5],
+            topleveldomain: testValidEmail[5].substring(
+              testValidEmail[5].lastIndexOf(".") + 1
+            ),
+            secondleveldomain: testValidEmail[5].substring(
+              0,
+              testValidEmail[5].lastIndexOf(".")
+            ),
+          };
+          console.log(testValidEmail);
+          // console.log(customEventSendin);
+          const validitionTrueEvent = new CustomEvent("validitiontrue", {
+            detail: customEventSendin,
+          });
+          element.dispatchEvent(validitionTrueEvent);
         } else {
           // add style
           if (item.validStyle) {
@@ -97,7 +109,8 @@ class validation {
           }
           // send event
           item.valid = false;
-          element.dispatchEvent(this.validitionFalseEvent);
+          const validitionFalseEvent = new CustomEvent("validitionfalse");
+          element.dispatchEvent(validitionFalseEvent);
         }
       });
     });
