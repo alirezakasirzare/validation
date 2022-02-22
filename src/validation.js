@@ -8,6 +8,7 @@ class validation {
     invalidStyle: null,
   };
   emailValidation = [];
+  validitionFalseEvent = new CustomEvent("validitionfalse");
 
   // constructor
   constructor(form) {
@@ -95,8 +96,6 @@ class validation {
               testValidEmail[5].lastIndexOf(".")
             ),
           };
-          console.log(testValidEmail);
-          // console.log(customEventSendin);
           const validitionTrueEvent = new CustomEvent("validitiontrue", {
             detail: customEventSendin,
           });
@@ -109,8 +108,7 @@ class validation {
           }
           // send event
           item.valid = false;
-          const validitionFalseEvent = new CustomEvent("validitionfalse");
-          element.dispatchEvent(validitionFalseEvent);
+          element.dispatchEvent(this.validitionFalseEvent);
         }
       });
     });
